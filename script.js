@@ -28,35 +28,57 @@ function adicionarTarefa(){
 
     let item = document.createElement("li");
 
-    item.innerText = tarefa;
+// Texto da tarefa
+let texto = document.createElement("span");
+texto.innerText = tarefa;
 
-    item.onclick = function(){
+// Botão X
+let botaoExcluir = document.createElement("button");
+botaoExcluir.innerText = "❌";
+botaoExcluir.className = "btn-excluir";
 
-        if(item.style.textDecoration === "line-through"){
+// Marcar como concluída ao clicar no texto
+texto.onclick = function () {
 
-            item.style.textDecoration = "none";
-            item.style.opacity = "1";
+    if (texto.style.textDecoration === "line-through") {
 
-        }else{
+        texto.style.textDecoration = "none";
+        texto.style.opacity = "1";
 
-            item.style.textDecoration = "line-through";
-            item.style.opacity = "0.6";
+    } else {
 
-        }
+        texto.style.textDecoration = "line-through";
+        texto.style.opacity = "0.6";
 
     }
 
-    lista.appendChild(item);
+};
 
-    total++;
+// Excluir tarefa
+botaoExcluir.onclick = function (event) {
 
-    contador.innerHTML =
-    "Total de tarefas: " + total;
+    event.stopPropagation(); // impede conflito com outros cliques
 
-    inputTarefa.value = "";
+    lista.removeChild(item);
 
-    inputTarefa.focus();
+    total--;
 
+    contador.innerHTML = "Total de tarefas: " + total;
+
+};
+
+// Adiciona os elementos no <li>
+item.appendChild(texto);
+item.appendChild(botaoExcluir);
+
+lista.appendChild(item);
+
+total++;
+
+contador.innerHTML = "Total de tarefas: " + total;
+
+inputTarefa.value = "";
+inputTarefa.focus();
 }
 
 // ============================
@@ -130,28 +152,4 @@ window.onload = function(){
 
     }
 
-}
-li{
-    background:#e5e7eb;
-    padding:12px;
-    margin-bottom:10px;
-    border-radius:6px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.btn-excluir{
-    background:#ffffff;
-    color:white;
-    border:none;
-    border-radius:5px;
-    padding:6px 10px;
-    cursor:pointer;
-    width:auto;
-    font-size:14px;
-}
-
-.btn-excluir:hover{
-    background:#e23636;
 }
