@@ -131,3 +131,27 @@ window.onload = function(){
     }
 
 }
+li{
+    background:#e5e7eb;
+    padding:12px;
+    margin-bottom:10px;
+    border-radius:6px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.btn-excluir{
+    background:#ffffff;
+    color:white;
+    border:none;
+    border-radius:5px;
+    padding:6px 10px;
+    cursor:pointer;
+    width:auto;
+    font-size:14px;
+}
+
+.btn-excluir:hover{
+    background:#e23636;
+}
