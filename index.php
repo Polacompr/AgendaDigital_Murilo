@@ -89,27 +89,26 @@
 
 </div>
 
-        <!-- TELA TAREFAS -->
-        <div id="tarefas" class="tela">
-
-            <h1>Minhas tarefas</h1>
-
+        <!-- Tela Tarefas -->
+    <div id="tarefas" class="tela">
+        <h1> Minhas tarefas</h1>
+        <!-- ALTERAÇÃO 1: Criar um formulário -->
+        <form action="php/salvar.php" method="POST">
             <input
                 type="text"
-                id="inputTarefa"
-                placeholder="Digite uma tarefa">
-
-            <button onclick="adicionarTarefa()">
-                🚀 Adicionar tarefa
+                name="tarefa"
+                placeholder="Digite uma tarefa..."
+                required>
+            <button type="submit">
+            Adicionar tarefa
             </button>
-
-            <ul id="listaTarefas"></ul>
-
-            <p id="contador">
-                Total de tarefas: 0
-            </p>
-
-        </div>
+        </form>
+        <!-- Ainda não utilizaremos -->
+        <ul id="listaTarefas"></ul>
+        <p id="contador">
+        Total de tarefas: 0
+        </p>
+    </div>
 
         <!-- TELA CONFIGURAÇÃO -->
         <div id="config" class="tela">
