@@ -153,3 +153,102 @@ window.onload = function(){
     }
 
 }
+
+// Função executada ao carregar a página
+async function carregarTarefas() {
+    const resposta = await fetch('http://seu-backend/tarefas');
+    const tarefas = await resposta.json();
+
+    const lista = document.getElementById('listaTarefas');
+    lista.innerHTML = ''; // Limpa a lista
+    
+    tarefas.forEach(tarefa => {
+        lista.innerHTML += `
+            <li>
+                <input type="checkbox" ${tarefa.status_tarefa ? 'checked' : ''}
+onchange="alternarStatus(${tarefa.id_tarefa}, this.checked)">
+                <span class="${tarefa.status_tarefa ? 'concluida' : ''}">${tarefa.descricao_tarefa}</span>
+                <button onclick="deletarTarefa(${tarefa.id_tarefa})"> </button>
+            </li>
+        `;
+    });
+
+    // Exemplo de como fica o botão dentro da tag <li>:
+lista.innerHTML += `
+<li>
+<input type="checkbox" ${checado} onchange="atualizarStatus(${tarefa.id_tarefa}, this.checked)">
+<span ${classeEstilo}>${tarefa.descricao_tarefa}</span>
+
+<button onclick="editarTarefa(${tarefa.id_tarefa}, '${tarefa.descricao_tarefa}')"> </button>
+<button onclick="deletarTarefa(${tarefa.id_tarefa})"> </button>
+</li>
+`;
+
+
+    atualizarContador(tarefas.length);
+}
+
+function atualizarContador(total) {
+    document.getElementById('contador').innerText = `Total de tarefas: ${total}`;
+   }
+
+async function alternarStatus(id, concluida) {
+    await fetch(`http://seu-backend/tarefas/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status_tarefa: concluida ? 1 : 0 })
+    });
+    carregarTarefas(); // Recarrega a lista
+}
+
+async function deletarTarefa(id) {
+    await fetch(`http://seu-backend/tarefas/${id}`, {
+        method: 'DELETE'
+    });
+    carregarTarefas(); // Recarrega a lista atualizada
+}
+   
+function carregarTarefas() {
+    // Chama o arquivo PHP que busca os dados no phpMyAdmin
+    fetch('listar_tarefas.php')
+    .then(response => response.json())
+    .then(tarefas => {
+    const lista = document.getElementById('listaTarefas');
+    lista.innerHTML = ''; // Limpa a lista antes de preencher
+   
+    tarefas.forEach(tarefa => {
+    lista.innerHTML += `
+    <li>
+    ${tarefa.descricao_tarefa}
+    <button onclick="deletarTarefa(${tarefa.id_tarefa})"> </button>
+    </li>
+    `;
+    });
+    // Atualiza o contador na tela
+    document.getElementById('contador').innerText = `Total de tarefas: ${tarefas.length}`;
+    });
+   }
+   // Executa a função assim que a página abre
+   window.onload = carregarTarefas;
+
+// Função chamada ao clicar no botão de editar
+function editarTarefa(id, textoAtual) {
+    const novoTexto = prompt("Digite o novo texto da tarefa:", textoAtual);
+   
+    // Se o usuário digitou algo e não cancelou o prompt
+    if (novoTexto !== null && novoTexto.trim() !== "") {
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('descricao_tarefa', novoTexto);
+    fetch('editar_tarefa.php', {
+    method: 'POST',
+    body: formData
+    })
+    .then(response => response.json())
+    .then(dados => {
+    if (dados.status === "sucesso") {
+    carregarTarefas(); // Recarrega a lista com o texto atualizado
+    }
+    });
+    }
+   }
