@@ -123,10 +123,44 @@ li{
     border-radius:6px;
     cursor:pointer;
     transition:.3s;
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
 li:hover{
     background:#d1d5db;
+}
+
+li span{
+    flex:1;
+}
+
+li span.concluida{
+    text-decoration:line-through;
+    color:#6b7280;
+}
+
+/* BOTÕES DE AÇÃO (editar/excluir) */
+
+li button{
+    width:auto;
+    max-width:none;
+    padding:8px 14px;
+    background:#2563eb;
+    border:2px solid #000;
+    border-radius:6px;
+    flex:none;
+}
+
+li button.btn-editar{
+    background:#facc15;
+    color:#000;
+}
+
+li button.btn-excluir{
+    background:#ef4444;
+    color:#fff;
 }
 
 #contador{
@@ -173,6 +207,10 @@ body.escuro input{
 body.escuro li{
     background:#374151;
     color:white;
+}
+
+body.escuro li button{
+    border:2px solid #000;
 }
 
 body.escuro select{
