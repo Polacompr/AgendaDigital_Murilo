@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['usuario_id'])) {
+ header("Location: login.php");
+ exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -34,6 +41,9 @@
 
                 <a onclick="mostrarTela('config')">
                     ⚙ Configuração
+                </a>
+                
+                <a href="php/logout.php"> Sair (<?= $_SESSION['usuario_nome'] ?>)
                 </a>
 
             </nav>
@@ -165,4 +175,3 @@
 </body>
 
 </html>
-
