@@ -1,11 +1,14 @@
 <?php
 include 'conexao.php';
-$id = $_GET['id'] ?? 0;
-if ($id > 0) {
- $stmt = $conn->prepare("DELETE FROM Tarefa WHERE id_tarefa = ?");
- $stmt->bind_param("i", $id);
- $stmt->execute();
 
- echo json_encode(["status" => "sucesso"]);
+$dados = json_decode(file_get_contents("php://input"), true);
+$id = $dados['id_tarefa'] ?? 0;
+
+if ($id > 0) {
+    $stmt = $conexao->prepare("DELETE FROM tarefas WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    echo json_encode(["status" => "sucesso"]);
+} else {
+    echo json_encode(["status" => "erro"]);
 }
-?>
