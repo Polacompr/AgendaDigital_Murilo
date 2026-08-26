@@ -121,11 +121,11 @@ function carregarTarefas() {
 
                 checkbox.type = "checkbox";
 
-                checkbox.checked = Number(tarefa.status_tarefa) === 1;
+                checkbox.checked = Number(tarefa.status) === 1;
 
                 checkbox.onchange = function () {
                     alternarStatus(
-                        tarefa.id_tarefa,
+                        tarefa.id,
                         checkbox.checked
                     );
                 };
@@ -134,7 +134,7 @@ function carregarTarefas() {
                 // Texto da tarefa
                 const texto = document.createElement("span");
 
-                texto.innerText = tarefa.descricao_tarefa;
+                texto.innerText = tarefa.tarefa;
 
                 if (checkbox.checked) {
                     texto.classList.add("concluida");
@@ -151,8 +151,8 @@ function carregarTarefas() {
                 botaoEditar.onclick = function () {
 
                     editarTarefa(
-                        tarefa.id_tarefa,
-                        tarefa.descricao_tarefa
+                        tarefa.id,
+                        tarefa.tarefa
                     );
 
                 };
@@ -167,7 +167,7 @@ function carregarTarefas() {
 
                 botaoExcluir.onclick = function () {
 
-                    deletarTarefa(tarefa.id_tarefa);
+                    deletarTarefa(tarefa.id);
 
                 };
 
