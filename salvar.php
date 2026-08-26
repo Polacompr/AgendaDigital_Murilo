@@ -1,20 +1,13 @@
 <?php
-
 include("conexao.php");
 
-$tarefa = $_POST['tarefa'];
+$tarefa = $_POST['tarefa'] ?? '';
 
-$sql = "INSERT INTO tarefas (tarefa)
-        VALUES ('$tarefa')";
-
-if (mysqli_query($conexao, $sql)) {
-
-    header("Location: ../index.php");
-
-} else {
-
-    echo "Erro ao salvar.";
-
+if (trim($tarefa) !== '') {
+    $stmt = $conexao->prepare("INSERT INTO tarefas (tarefa, status) VALUES (?, 0)");
+    $stmt->bind_param("s", $tarefa);
+    $stmt->execute();
 }
 
-?>
+header("Location: ../index.php");
+exit;
